@@ -25,15 +25,15 @@ cc_library(
     hdrs = ["cleanup.h"],
 )
 
-cc_test(
-    name = "cleanup_test",
-    size = "small",
-    srcs = ["tests/cleanup_test.cc"],
-    deps = [
-        ":cleanup",
-        "@com_google_googletest//:gtest_main",
-    ],
-)
+# cc_test(
+#     name = "cleanup_test",
+#     size = "small",
+#     srcs = ["tests/cleanup_test.cc"],
+#     deps = [
+#         ":cleanup",
+#         "@com_google_googletest//:gtest_main",
+#     ],
+# )
 
 py_library(
     name = "export_api",

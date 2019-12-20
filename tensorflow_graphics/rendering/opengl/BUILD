@@ -14,8 +14,7 @@
 # Math functionalities for tf-graphics.
 
 # google internal package dependency 8)
-load("//third_party/tensorflow:tensorflow.bzl", "tf_custom_op_library", "tf_gen_op_wrapper_py")
-load("//third_party/tensorflow:tensorflow.google.bzl", "tf_custom_op_py_library")
+load("@org_tensorflow//tensorflow:tensorflow.bzl", "tf_custom_op_library", "tf_custom_op_py_library", "tf_gen_op_wrapper_py")
 # google internal package dependency 5
 
 licenses(["notice"])  # Apache 2.0
@@ -60,7 +59,7 @@ cc_library(
         ":egl_util",
         ":macros",
         "//tensorflow_graphics/util:cleanup",
-        "//third_party/tensorflow/core:lib",
+        "@org_tensorflow//tensorflow/core:lib",
     ],
 )
 
@@ -74,8 +73,8 @@ cc_test(
     deps = [
         ":egl_offscreen_context",
         ":gl_native_libs",
-        "//third_party/tensorflow/core:test",
         "@com_google_googletest//:gtest_main",
+        "@org_tensorflow//tensorflow/core:test",
     ],
 )
 
@@ -105,8 +104,8 @@ cc_library(
     visibility = ["//visibility:private"],
     deps = [
         ":EGL_headers",
-        "//third_party/tensorflow/core:lib",
         "@com_google_absl//absl/strings",
+        "@org_tensorflow//tensorflow/core:lib",
     ],
 )
 
@@ -126,7 +125,7 @@ cc_library(
     deps = [
         ":macros",
         "//tensorflow_graphics/util:cleanup",
-        "//third_party/tensorflow/core:lib",
+        "@org_tensorflow//tensorflow/core:lib",
     ],
 )
 
@@ -141,8 +140,8 @@ cc_test(
         ":egl_offscreen_context",
         ":gl_native_libs",
         ":gl_program",
-        "//third_party/tensorflow/core:test",
         "@com_google_googletest//:gtest_main",
+        "@org_tensorflow//tensorflow/core:test",
     ],
 )
 
@@ -153,7 +152,8 @@ cc_library(
     deps = [
         ":macros",
         "//tensorflow_graphics/util:cleanup",
-        "//third_party/tensorflow/core:lib",
+        "@com_google_absl//absl/types:span",
+        "@org_tensorflow//tensorflow/core:lib",
     ],
 )
 
@@ -169,9 +169,9 @@ cc_test(
         ":gl_native_libs",
         ":gl_render_targets",
         ":macros",
-        "//third_party/tensorflow/core:lib",
-        "//third_party/tensorflow/core:test",
         "@com_google_googletest//:gtest_main",
+        "@org_tensorflow//tensorflow/core:lib",
+        "@org_tensorflow//tensorflow/core:test",
     ],
 )
 
@@ -182,7 +182,8 @@ cc_library(
     deps = [
         ":macros",
         "//tensorflow_graphics/util:cleanup",
-        "//third_party/tensorflow/core:lib",
+        "@com_google_absl//absl/types:span",
+        "@org_tensorflow//tensorflow/core:lib",
     ],
 )
 
@@ -196,19 +197,9 @@ cc_test(
     deps = [
         ":gl_native_libs",
         ":gl_shader_storage_buffer",
-        "//third_party/tensorflow/core:test",
         "@com_google_googletest//:gtest_main",
+        "@org_tensorflow//tensorflow/core:test",
     ],
-)
-
-# This library provides stub implementation of the OpenGL libraries.
-cc_library(
-    name = "gl_stub_libs",
-    deps = [
-        "//third_party/GL/stub:EGL",  # buildcleaner: keep
-        "//third_party/GL/stub:GLESv2",  # buildcleaner: keep
-    ],
-    alwayslink = 1,
 )
 
 py_library(
@@ -255,7 +246,7 @@ cc_library(
         ":gl_render_targets",
         ":gl_shader_storage_buffer",
         "//tensorflow_graphics/util:cleanup",
-        "//third_party/tensorflow/core:lib",
+        "@org_tensorflow//tensorflow/core:lib",
     ],
 )
 
@@ -270,9 +261,9 @@ cc_test(
         ":egl_offscreen_context",
         ":gl_native_libs",
         ":rasterizer",
-        "//third_party/tensorflow/core:test",
         "@com_google_absl//absl/types:span",
         "@com_google_googletest//:gtest_main",
+        "@org_tensorflow//tensorflow/core:test",
     ],
 )
 
@@ -283,9 +274,9 @@ cc_library(
         ":macros",
         ":rasterizer_with_context",
         ":thread_safe_resource_pool",
-        "//third_party/tensorflow/core:framework",
-        "//third_party/tensorflow/core:lib",
         "@com_google_absl//absl/types:span",
+        "@org_tensorflow//tensorflow/core:framework",
+        "@org_tensorflow//tensorflow/core:lib",
     ],
     alwayslink = 1,
 )
@@ -323,7 +314,7 @@ tf_gen_op_wrapper_py(
     name = "gen_rasterizer_op",
     out = "gen_rasterizer_op.py",
     deps = [
-        ":gl_stub_libs",
+        ":gl_native_libs",
         ":rasterizer_op_lib",
     ],
 )
@@ -347,18 +338,14 @@ py_test(
     tags = [
         "nomsan",  # Un-initialized values in libEGL.
     ],
-    test_on_cpu = False,
+    # google internal rule 2
     # google internal rule 3
     # google internal rule 4
     # google internal rule 5
     # google internal rule 6
     deps = [
-        ":gl_native_libs",
         ":math",
         ":rasterizer_op_py",
-        # google internal package dependency 2
-        # google internal package dependency 6
-        "//third_party/py/six",
         # google internal package dependency 1,
         "//tensorflow_graphics/util:test_case",
     ],
@@ -372,7 +359,7 @@ cc_library(
         ":egl_offscreen_context",
         ":rasterizer",
         "//tensorflow_graphics/util:cleanup",
-        "//third_party/tensorflow/core:lib",
+        "@org_tensorflow//tensorflow/core:lib",
     ],
 )
 
@@ -387,10 +374,10 @@ cc_test(
         ":gl_native_libs",
         ":rasterizer_with_context",
         ":thread_safe_resource_pool",
-        "//third_party/tensorflow/core:lib",
-        "//third_party/tensorflow/core:test",
         "@com_google_absl//absl/types:span",
         "@com_google_googletest//:gtest_main",
+        "@org_tensorflow//tensorflow/core:lib",
+        "@org_tensorflow//tensorflow/core:test",
     ],
 )
 
@@ -399,8 +386,8 @@ cc_library(
     hdrs = ["thread_safe_resource_pool.h"],
     deps = [
         ":macros",
-        "//third_party/tensorflow/core:lib",
         "@com_google_absl//absl/synchronization",
+        "@org_tensorflow//tensorflow/core:lib",
     ],
 )
 
@@ -409,8 +396,8 @@ cc_test(
     srcs = ["tests/thread_safe_resource_pool_test.cc"],
     deps = [
         ":thread_safe_resource_pool",
-        "//third_party/tensorflow/core:lib",
-        "//third_party/tensorflow/core:test",
         "@com_google_googletest//:gtest_main",
+        "@org_tensorflow//tensorflow/core:lib",
+        "@org_tensorflow//tensorflow/core:test",
     ],
 )

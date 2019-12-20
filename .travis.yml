@@ -21,6 +21,7 @@ before_install:
   - sudo apt-get -y install libopenexr-dev
   - sudo apt-get -y install libgles2-mesa-dev
   - sudo apt-get -y install libc-ares-dev
+  - pip install -U setuptools
   - pip install -U absl-py
   - pip install -U scipy
   - pip install -U OpenEXR
