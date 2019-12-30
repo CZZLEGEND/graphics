@@ -126,3 +126,15 @@ def generate_random_test_rotation_matrix_2d():
   random_matrix = np.array(
       [stats.special_ortho_group.rvs(2) for _ in range(20)])
   return np.reshape(random_matrix, [5, 4, 2, 2])
+
+
+def generate_random_test_lbs_transform():
+  """Generates random test lbs transform."""
+  tensor_dimensions = np.random.randint(3)
+  tensor_shape = np.random.randint(1, 10, size=(tensor_dimensions)).tolist()
+  random_point = np.random.uniform(size=tensor_shape + [3])
+  num_weights = np.random.randint(2, 10)
+  random_weights = np.random.uniform(size=tensor_shape + [num_weights])
+  random_weights /= np.sum(random_weights, axis=-1)
+  random_transforms = np.random.uniform(size=[num_weights, 4, 4])
+  return random_point, random_weights, random_transforms
